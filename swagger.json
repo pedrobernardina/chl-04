@@ -1,0 +1,149 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RentalX Doc",
+    "description": "This is a Car Rental API",
+    "version": "1.0.0",
+    "contact": ""
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Create a new User",
+        "requestBody": {
+          "content": { 
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Oribos",
+                  "email": "oribos@tzpum.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Email already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["user"],
+        "summary": "List all users",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "required": true,
+            "description": "Numeric ID of the current user",
+            "schema": {
+              "type": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid permissions. Must be admin"
+          }
+        }
+      }
+    },
+    "/users/:user_id/admin": {
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "List all users",
+        "responses": {
+          "200": {
+            "description": "List of all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exist"
+          }
+        }
+      }
+    },
+    "/users/:user_id": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user from ID",
+        "responses": {
+          "200": {
+            "description": "Selected user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exist"
+          }
+        }
+      }
+    }
+  }
+}
